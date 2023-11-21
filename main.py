@@ -1,6 +1,6 @@
 import sqlite3
 import sys
-
+from updata import Updatawidget
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
@@ -11,6 +11,8 @@ class DBSample(QMainWindow):
         super().__init__()
         uic.loadUi('main.ui', self)
         self.connection = sqlite3.connect("coffee.sqlite")
+        self.pushButton.clicked.connect(self.update)
+        self.pushButton_2.clicked.connect(self.select_data)
         self.select_data()
 
     def select_data(self):
@@ -26,6 +28,11 @@ class DBSample(QMainWindow):
             self.tableWidget.setHorizontalHeaderLabels(['ID', 'название сорта', 'степень обжарки',
                                                         'молотый/в зернах', 'описание вкуса', 'цена',
                                                         'объем упаковки'])
+
+    def update(self):
+        window = Updatawidget(self)
+        window.show()
+        self.select_data()
 
 
 if __name__ == '__main__':
